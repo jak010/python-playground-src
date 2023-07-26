@@ -16,6 +16,9 @@ class OtherKlass(SomKlass):
     def task(self):
         return self.__get_name_v3()
 
+    def task2(self):
+        return self.asdasd
+
 
 if __name__ == '__main__':
     instance = OtherKlass()
