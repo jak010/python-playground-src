@@ -1,10 +1,4 @@
-import time
-
 import pika
-import json
-import datetime
-
-# SetUp Pika Credential
 
 pika_credential = pika.ConnectionParameters(
     host="localhost",
@@ -17,12 +11,16 @@ pika_credential = pika.ConnectionParameters(
 )
 
 connection = pika.BlockingConnection(pika_credential)
+
+
+def callback(ch, method, properties, body):
+    print(f"Received message: {body}")
+
+
 channel = connection.channel()
 
-channel.basic_publish(
-    exchange="",
-    routing_key="SAMPLE_QUEUE",
-    body=json.dumps({"name": "jako", "iss": str(datetime.datetime.now())})
-)
+# 큐에서 메시지 받기
+channel.basic_consume(queue='SAMPLE_QUEUE', on_message_callback=callback, auto_ack=True)
 
-connection.close()
+print('Waiting for messages. To exit, press CTRL+C')
+channel.start_consuming()
