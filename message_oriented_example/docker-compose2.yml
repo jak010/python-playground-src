@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  rabbitmq-node1:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq-node1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=mysecretcookie
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # RabbitMQ Management UI port
+    networks:
+      - rabbitmq-cluster
+
+  rabbitmq-node2:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq-node2
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=mysecretcookie
+    ports:
+      - "5673:5672"  # RabbitMQ default port
+      - "15673:15672"  # RabbitMQ Management UI port
+    networks:
+      - rabbitmq-cluster
+
+  rabbitmq-node3:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq-node3
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=mysecretcookie
+    ports:
+      - "5674:5672"  # RabbitMQ default port
+      - "15674:15672"  # RabbitMQ Management UI port
+    networks:
+      - rabbitmq-cluster
+
+networks:
+  rabbitmq-cluster:
